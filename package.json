@@ -8,8 +8,11 @@
   },
   "keywords": [
     "exploiting",
+    "exploit",
     "radare2",
-    "radare"
+    "radare",
+    "helpers",
+    "helper"
   ],
   "author": "Jaime Peñalba",
   "license": "GPLv3"
