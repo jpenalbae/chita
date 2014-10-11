@@ -6,10 +6,12 @@
 // - Search jumps and shit like that
 // - Format strings helper
 // - ROP chain debugger
-//
+// - Executable info
 
 var mod_getopt = require('posix-getopt');
+
 var text = require('./lib/text');
+var rop = require('./lib/rop');
 
 
 function usage () {
@@ -29,7 +31,8 @@ function usage () {
 
 /* Comnand parameters */
 var _opts = {
-    len: 1024
+    len: 1024,
+    file: '',
 };
 
 
@@ -41,11 +44,15 @@ process.argc = process.argv.length;
 
 
 /* Arguments parsing */
-parser = new mod_getopt.BasicParser('l:h', process.argv);
+parser = new mod_getopt.BasicParser('l:f:h', process.argv);
 while ((option = parser.getopt()) !== undefined) {
     switch (option.option) {
     case 'l':
         _opts.len = parseInt(option.optarg);
+        break;
+
+    case 'f':
+        _opts.file = option.optarg;
         break;
 
     case 'h':
@@ -74,6 +81,7 @@ switch (cmd) {
         break;
 
     case 'rop':
+        rop.gadgets(_opts.file);
         break;
 
     case 'rdbg':
@@ -96,4 +104,4 @@ switch (cmd) {
 }
 
 
-process.exit(0);
+//process.exit(0);
