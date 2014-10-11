@@ -33,6 +33,8 @@ function usage () {
 var _opts = {
     len: 1024,
     file: '',
+    base: '0x0',
+    onlyRet: true
 };
 
 
@@ -44,7 +46,7 @@ process.argc = process.argv.length;
 
 
 /* Arguments parsing */
-parser = new mod_getopt.BasicParser('l:f:h', process.argv);
+parser = new mod_getopt.BasicParser('l:f:b:ah', process.argv);
 while ((option = parser.getopt()) !== undefined) {
     switch (option.option) {
     case 'l':
@@ -53,6 +55,14 @@ while ((option = parser.getopt()) !== undefined) {
 
     case 'f':
         _opts.file = option.optarg;
+        break;
+
+    case 'b':
+        _opts.base = option.optarg;
+        break;
+
+    case 'a':
+        _opts.onlyRet = false;
         break;
 
     case 'h':
@@ -81,7 +91,7 @@ switch (cmd) {
         break;
 
     case 'rop':
-        rop.gadgets(_opts.file);
+        rop.gadgets(_opts.file, _opts.onlyRet, _opts.base);
         break;
 
     case 'rdbg':
