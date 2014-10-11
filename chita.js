@@ -12,19 +12,23 @@
 
 var mod_getopt = require('posix-getopt');
 
-var text = require('./lib/text');
+var miasc = require('./lib/misc');
 var rop = require('./lib/rop');
 
 
 function usage () {
     console.error(
+        '\n' +
         'Usage: node ' + process.argv[1] + ' command [parameters]\n\n' +
         'Where valid commands are:\n' +
-        '  - pattern: Generate a pseudorandom text pattern\n' +
-        '  - rop: search for rop gadgets\n' +
-        '  - rdbg: generate a gdb or radare file to debug a ROP chain\n' +
-        '  - fmt: format string exploiting helper\n' +
-        '  - jmp: search for instructions such as \'jmp esp\' and so on\n\n'
+        '  - pattern  Generate a pseudorandom text pattern\n' +
+        '  - rop      Search for rop gadgets\n' +
+        '  - rdbg     Generate a gdb or radare file to debug a ROP chain\n' +
+        '  - fmt      Format string exploiting helper\n' +
+        '  - jmp      Search for instructions such as \'jmp esp\' and so on\n' +
+        '  - pivots   Search for stack pivots\n' +
+        '  - offset   Calculate distance between two addresses\n' +
+        '  - info     Show executable info\n\n'
         );
     process.exit(1);
 }
@@ -88,12 +92,16 @@ if (parser.optind() < process.argv.length) {
 /* Command parsing */
 switch (cmd) {
     case 'pattern':
-        var pattern = text.pattern(_opts.len);
+        var pattern = misc.pattern(_opts.len);
         console.log(pattern);
         break;
 
     case 'rop':
         rop.gadgets(_opts.file, _opts.onlyRet, _opts.base);
+        break;
+
+    case 'info':
+
         break;
 
     case 'rdbg':
