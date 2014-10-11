@@ -7,6 +7,8 @@
 // - Format strings helper
 // - ROP chain debugger
 // - Executable info
+// - Stack pivots
+// - offset
 
 var mod_getopt = require('posix-getopt');
 

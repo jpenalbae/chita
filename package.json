@@ -1,8 +1,8 @@
 {
-  "name": "fea",
+  "name": "chita",
   "version": "0.0.1",
   "description": "Linux exploiting helpers using radare2",
-  "main": "fea.js",
+  "main": "chita.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,7 +12,9 @@
     "radare2",
     "radare",
     "helpers",
-    "helper"
+    "helper",
+    "mona",
+    "chita",
   ],
   "author": "Jaime Peñalba",
   "license": "GPLv3",
