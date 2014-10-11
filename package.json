@@ -1,0 +1,16 @@
+{
+  "name": "fea",
+  "version": "0.0.1",
+  "description": "Linux exploiting helpers using radare2",
+  "main": "fea.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "exploiting",
+    "radare2",
+    "radare"
+  ],
+  "author": "Jaime Peñalba",
+  "license": "GPLv3"
+}
