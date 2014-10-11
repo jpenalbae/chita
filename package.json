@@ -15,5 +15,8 @@
     "helper"
   ],
   "author": "Jaime Peñalba",
-  "license": "GPLv3"
+  "license": "GPLv3",
+  "dependencies": {
+    "posix-getopt": "^1.1.0"
+  }
 }
