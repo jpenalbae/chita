@@ -14,11 +14,12 @@
     "helpers",
     "helper",
     "mona",
-    "chita",
+    "chita"
   ],
   "author": "Jaime Peñalba",
   "license": "GPLv3",
   "dependencies": {
+    "colors": "^1.0.3",
     "posix-getopt": "^1.1.0"
   }
 }

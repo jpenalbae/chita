@@ -12,7 +12,7 @@
 
 var mod_getopt = require('posix-getopt');
 
-var miasc = require('./lib/misc');
+var misc = require('./lib/misc');
 var rop = require('./lib/rop');
 
 
@@ -92,8 +92,7 @@ if (parser.optind() < process.argv.length) {
 /* Command parsing */
 switch (cmd) {
     case 'pattern':
-        var pattern = misc.pattern(_opts.len);
-        console.log(pattern);
+        misc.pattern(_opts.len);
         break;
 
     case 'rop':
@@ -101,7 +100,7 @@ switch (cmd) {
         break;
 
     case 'info':
-
+        misc.info(_opts.file);
         break;
 
     case 'rdbg':
