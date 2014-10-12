@@ -6,6 +6,7 @@
 // - Search jumps and shit like that
 // - Format strings helper
 // - ROP chain debugger
+// - ROP output for C/Python/js
 // - Executable info
 // - Stack pivots
 // - offset
