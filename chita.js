@@ -25,6 +25,7 @@ function usage () {
         '  - pattern  Generate a pseudorandom text pattern\n' +
         '  - rop      Search for rop gadgets\n' +
         '  - rdbg     Generate a gdb or radare file to debug a ROP chain\n' +
+        '  - rop2c    Generate C code from ROP chain file\n' +
         '  - fmt      Format string exploiting helper\n' +
         '  - jmp      Search for instructions such as \'jmp esp\' and so on\n' +
         '  - pivots   Search for stack pivots\n' +
@@ -40,6 +41,8 @@ function usage () {
 var _opts = {
     len: 1024,
     file: '',
+    chain: '',
+    dest: '',
     base: '0x0',
     onlyRet: true
 };
@@ -53,7 +56,7 @@ process.argc = process.argv.length;
 
 
 /* Arguments parsing */
-parser = new mod_getopt.BasicParser('l:f:b:ah', process.argv);
+parser = new mod_getopt.BasicParser('l:f:b:r:d:ah', process.argv);
 while ((option = parser.getopt()) !== undefined) {
     switch (option.option) {
     case 'l':
@@ -62,6 +65,14 @@ while ((option = parser.getopt()) !== undefined) {
 
     case 'f':
         _opts.file = option.optarg;
+        break;
+
+    case 'r':
+        _opts.chain = option.optarg;
+        break;
+
+    case 'd':
+        _opts.dest = option.optarg;
         break;
 
     case 'b':
@@ -105,6 +116,21 @@ switch (cmd) {
         break;
 
     case 'rdbg':
+        var chain = misc.parseRopChain(_opts.chain);
+        misc.findRet(_opts.file, function (offset) {
+            misc.dbgFileR2(chain, _opts.dest, offset);
+        });
+        break;
+
+    case 'rop2c':
+        var chain = misc.parseRopChain(_opts.chain);
+        console.log("unsigned char rop[] = ");
+
+        for (var x=0; x<chain.length; x++)
+            console.log("\"" + misc.toLittlePrint(chain[x].addr) + 
+                "\"\t// " + chain[x].comment);
+
+        console.log(";");
         break;
 
     case 'fmt':
