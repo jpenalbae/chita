@@ -24,6 +24,7 @@ const search = require('./lib/search');
 /* Globals */
 global.r2 = null;
 global.r2bin = {};
+global.everyRet = false;
 
 const help = {};
 
@@ -35,7 +36,7 @@ const _opts = {
     chain: '',
     base: '0x0',
     written: 0,
-    onlyRet: true
+    extended: false
 };
 
 help.info = function () {
@@ -146,11 +147,15 @@ help.jmp = function () {
     console.error(
         '\n' +
         'Find jumps to the given register.\n' +
-        'Usage: #!pipe chita jmp -r register\n\n' +
+        'Usage: #!pipe chita jmp -r register [-x] [-e]\n\n' +
+
         'Options:\n' +
-        '  -r register:  The register to jump to\n\n' +
+        '  -r register:  The register to jump to\n' +
+        '  -e:           Display every ret (including ret imm16)\n' +
+        '  -x:           Extended output\n\n' +
 
         'Examples:\n' +
+        '  [0x00000000]> #!pipe chita jmp -r rsp -e -x\n' +
         '  [0x00000000]> #!pipe chita jmp -r rsp\n\n'
     );
 
@@ -161,9 +166,14 @@ help.pivot = function () {
     console.error(
         '\n' +
         'Search for ROP stack pivots.\n' +
-        'Usage: #!pipe chita pivot\n\n' +
+        'Usage: #!pipe chita pivot [-x] [-e]\n\n' +
+
+        'Options:\n' +
+        '  -a:           Display every ret (including ret imm16)\n' +
+        '  -x:           Extended output\n\n' +
 
         'Examples:\n' +
+        '  [0x00000000]> #!pipe chita pivot -e -x\n' +
         '  [0x00000000]> #!pipe chita pivot\n\n'
     );
 
@@ -254,7 +264,7 @@ process.argc = process.argv.length;
 
 /* Arguments parsing */
 let option;
-const parser = new mod_getopt.BasicParser('l:f:b:r:d:a:p:w:o:h', process.argv);
+const parser = new mod_getopt.BasicParser('l:f:b:r:d:a:p:w:o:hxe', process.argv);
 while ((option = parser.getopt()) !== undefined) {
     switch (option.option) {
     case 'l':
@@ -291,6 +301,14 @@ while ((option = parser.getopt()) !== undefined) {
 
     case 'w':
         _opts.written = parseInt(option.optarg);
+        break;
+
+    case 'x':
+        _opts.extended = true;
+        break;
+
+    case 'e':
+        global.everyRet = true;
         break;
 
     default:
@@ -352,11 +370,11 @@ switch (cmd) {
         break;
 
     case 'jmp':
-        search.jumps(_opts.chain);
+        search.jumps(_opts.chain, _opts.extended);
         break;
 
     case 'pivot':
-        search.pivots();
+        search.pivots(_opts.extended);
         break;
 
     case 'help':
