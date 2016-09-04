@@ -180,6 +180,23 @@ help.pivot = function () {
     process.exit(1);
 };
 
+help.little = function () {
+    console.error(
+        '\n' +
+        'Convert hexstring to little endian.\n' +
+        'Usage: #!pipe chita little -d hexstring\n\n' +
+
+        'Options:\n' +
+        '  -d hextring:  The hexstring to convert\n\n' +
+
+        'Examples:\n' +
+        '  [0x00000000]> #!pipe chita little -d 0x41424344\n' +
+        '  [0x00000000]> #!pipe chita little -d 0x414243445152535461626364\n\n'
+    );
+
+    process.exit(1);
+};
+
 
 function usage () {
     console.error(
@@ -193,6 +210,7 @@ function usage () {
         '  jmp      Search for instructions such as \'jmp esp\' and so on\n' +
         '  pivot    Search for stack pivots\n' +
         '  info     Show executable info\n' +
+        '  little   Convert hexstring to little endian\n' +
         '  help     Shows this help\n\n' +
         'Extended help: #!pipe chita [command] -h\n\n'
         );
@@ -375,6 +393,14 @@ switch (cmd) {
 
     case 'pivot':
         search.pivots(_opts.extended);
+        break;
+
+    case 'little':
+        if (!_opts.data) {
+            usage();
+            return;
+        }
+        console.log(misc.hexToLittleEscaped(_opts.data));
         break;
 
     case 'help':
