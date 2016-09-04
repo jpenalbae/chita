@@ -20,7 +20,8 @@
   "license": "GPLv3",
   "dependencies": {
     "colors": "^1.0.3",
+    "long": "^3.2.0",
     "posix-getopt": "^1.1.0",
-    "r2pipe": "^0.1.1"
+    "r2pipe": "^1.0.2"
   }
 }
