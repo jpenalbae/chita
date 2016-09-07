@@ -101,10 +101,11 @@ help.rop2c = function () {
         'Usage: #!pipe chita rop2c -r ropfile [-l lang]\n\n' +
         'Options:\n' +
         '  -r ropfile:  The file containing the rop gadgets file\n' +
-        '  -w lang:     Supported output languages: C, python (default C)\n\n' +
+        '  -l lang:     Supported output languages: C, python, text (default C)\n\n' +
 
         'Examples:\n' +
         '  [0x00000000]> #!pipe chita rop2c -r /tmp/gadgets\n' +
+        '  [0x00000000]> #!pipe chita rop2c -r /tmp/gadgets -l text\n' +
         '  [0x00000000]> #!pipe chita rop2c -r /tmp/gadgets -l python\n\n' +
 
         'ROP gadgets file format (to use with -r):\n' +
